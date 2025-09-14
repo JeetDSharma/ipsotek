@@ -21,28 +21,31 @@ class ElasticsearchClient:
     def connect(self) -> bool:
         """Establish connection to Elasticsearch."""
         try:
+            # Build connection URL with authentication
+            if config.elasticsearch.username and config.elasticsearch.password:
+                url = f"http://{config.elasticsearch.username}:{config.elasticsearch.password}@{config.elasticsearch.host}:{config.elasticsearch.port}"
+            else:
+                url = config.get_elasticsearch_url()
+            
             connection_params = {
-                "hosts": [config.get_elasticsearch_url()],
+                "hosts": [url],
                 "verify_certs": config.elasticsearch.verify_certs,
                 "ssl_show_warn": False,
+                "timeout": 30,
+                "max_retries": 3,
+                "retry_on_timeout": True,
             }
-            
-            # Add authentication if provided
-            if config.elasticsearch.username and config.elasticsearch.password:
-                connection_params["basic_auth"] = (
-                    config.elasticsearch.username,
-                    config.elasticsearch.password
-                )
             
             self.client = Elasticsearch(**connection_params)
             
-            # Test connection
-            self.client.ping()
+            # Test connection with a simple operation
+            info = self.client.info()
             self.is_connected = True
             logger.info(f"Connected to Elasticsearch at {config.get_elasticsearch_url()}")
+            logger.info(f"Elasticsearch version: {info['version']['number']}")
             return True
             
-        except (ConnectionError, RequestError) as e:
+        except Exception as e:
             logger.error(f"Failed to connect to Elasticsearch: {e}")
             self.is_connected = False
             return False

@@ -60,7 +60,8 @@ def test_elasticsearch():
         if elasticsearch_client.client:
             response = elasticsearch_client.client.search(
                 index=config.elasticsearch.index,
-                body={"query": {"match_all": {}}, "size": 1}
+                query={"match_all": {}},
+                size=1
             )
             hits = response['hits']['total']
             print(f"✅ Search successful! Total documents: {hits}")
