@@ -98,7 +98,7 @@ class ElasticsearchQuery(BaseModel):
     index: str
     query: Dict[str, Any] = {"match_all": {}}
     size: int = 100
-    sort: Optional[List[Dict[str, str]]] = None
+    sort: Optional[List[Dict[str, Any]]] = None
     scroll: Optional[str] = None
     scroll_id: Optional[str] = None
     
