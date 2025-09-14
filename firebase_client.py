@@ -53,11 +53,15 @@ class FirebaseClient:
         collection_name: str
     ) -> FirebaseDocument:
         """Convert Elasticsearch hit to Firebase document."""
+        # Handle cases where _index might not be available
+        index_name = getattr(hit, '_index', 'unknown_index')
+        doc_id = getattr(hit, '_id', 'unknown_id')
+        
         return FirebaseDocument(
-            id=f"{hit._index}_{hit._id}",  # Create unique ID
+            id=f"{index_name}_{doc_id}",  # Create unique ID
             data=hit._source,
-            source_index=hit._index,
-            source_id=hit._id
+            source_index=index_name,
+            source_id=doc_id
         )
     
     def _prepare_document_for_firestore(self, document: FirebaseDocument) -> Dict[str, Any]:

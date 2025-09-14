@@ -37,13 +37,15 @@ async def test_with_existing_data():
             # Try with a simple match_all query to get any data
             from elasticsearch_client import elasticsearch_client
             from firebase_client import firebase_client
+            from models import ElasticsearchQuery
             
             # Get a few documents using match_all
-            documents = elasticsearch_client.search_documents({
-                "index": config.elasticsearch.index,
-                "query": {"match_all": {}},
-                "size": 5  # Just get 5 documents for testing
-            })
+            query = ElasticsearchQuery(
+                index=config.elasticsearch.index,
+                query={"match_all": {}},
+                size=5  # Just get 5 documents for testing
+            )
+            documents = elasticsearch_client.search_documents(query)
             
             if documents:
                 logger.info(f"Found {len(documents)} documents with match_all query")
