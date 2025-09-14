@@ -1,0 +1,8 @@
+elasticsearch==8.11.0
+firebase-admin==6.4.0
+python-dotenv==1.0.0
+asyncio==3.4.3
+aiohttp==3.9.1
+pydantic==2.5.2
+loguru==0.7.2
+schedule==1.2.0
