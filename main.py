@@ -94,7 +94,7 @@ async def run_full_sync():
     
     try:
         # Process all data
-        processed_count = await data_pipeline.process_all_data_stream()
+        processed_count = await data_pipeline.process_all_data()
         logger.info(f"Full sync completed. Processed {processed_count} documents")
         
         # Print statistics

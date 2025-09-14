@@ -33,7 +33,7 @@ class DataPipeline:
                 return False
             
             # Connect to Elasticsearch
-            if not await elasticsearch_client.connect():
+            if not elasticsearch_client.connect():
                 logger.error("Failed to connect to Elasticsearch")
                 return False
             
@@ -42,7 +42,7 @@ class DataPipeline:
                 logger.error("Firebase connection test failed")
                 return False
             
-            if not await elasticsearch_client.test_connection():
+            if not elasticsearch_client.test_connection():
                 logger.error("Elasticsearch connection test failed")
                 return False
             
@@ -57,7 +57,7 @@ class DataPipeline:
         """Clean up resources."""
         try:
             logger.info("Cleaning up pipeline resources...")
-            await elasticsearch_client.disconnect()
+            elasticsearch_client.disconnect()
             logger.info("Pipeline cleanup completed")
         except Exception as e:
             logger.error(f"Error during cleanup: {e}")
@@ -68,7 +68,7 @@ class DataPipeline:
             logger.info(f"Processing data from the last {minutes_back} minutes...")
             
             # Get recent documents from Elasticsearch
-            documents = await elasticsearch_client.get_recent_documents(
+            documents = elasticsearch_client.get_recent_documents(
                 index_name=config.elasticsearch.index,
                 minutes_back=minutes_back,
                 batch_size=config.pipeline.batch_size
@@ -104,51 +104,46 @@ class DataPipeline:
             self.stats.set_error(str(e))
             return 0
     
-    async def process_all_data_stream(self) -> int:
-        """Process all data from Elasticsearch using streaming."""
+    async def process_all_data(self) -> int:
+        """Process all data from Elasticsearch."""
         try:
             logger.info("Starting to process all data from Elasticsearch...")
             
-            total_processed = 0
-            
-            async for document_batch in elasticsearch_client.get_all_documents_stream(
+            # Get all documents from Elasticsearch
+            documents = elasticsearch_client.get_all_documents(
                 index_name=config.elasticsearch.index,
                 batch_size=config.pipeline.batch_size
-            ):
-                if not document_batch:
-                    break
-                
-                logger.info(f"Processing batch of {len(document_batch)} documents")
-                
-                # Store documents in Firebase
-                stored_count = await firebase_client.store_elasticsearch_hits(
-                    hits=document_batch,
-                    collection_name=config.firebase.collection
-                )
-                
-                total_processed += stored_count
-                
-                # Update statistics
-                self.stats.increment_processed()
-                if stored_count > 0:
-                    self.stats.increment_successful()
-                else:
-                    self.stats.increment_failed()
-                
-                logger.info(f"Processed {stored_count} documents in this batch")
-                
-                # Small delay to prevent overwhelming the services
-                await asyncio.sleep(0.1)
+            )
             
-            self.stats.set_success()
-            logger.info(f"Completed processing all data. Total processed: {total_processed}")
-            return total_processed
+            if not documents:
+                logger.info("No documents found")
+                return 0
+            
+            logger.info(f"Found {len(documents)} documents")
+            
+            # Store documents in Firebase
+            stored_count = await firebase_client.store_elasticsearch_hits(
+                hits=documents,
+                collection_name=config.firebase.collection
+            )
+            
+            # Update statistics
+            self.stats.increment_processed()
+            if stored_count > 0:
+                self.stats.increment_successful()
+                self.stats.set_success()
+            else:
+                self.stats.increment_failed()
+                self.stats.set_error("Failed to store documents")
+            
+            logger.info(f"Completed processing all data. Total processed: {stored_count}")
+            return stored_count
             
         except Exception as e:
             logger.error(f"Error processing all data: {e}")
             self.stats.increment_failed()
             self.stats.set_error(str(e))
-            return total_processed
+            return 0
     
     async def process_custom_query(self, query: Dict[str, Any]) -> int:
         """Process data using a custom Elasticsearch query."""
@@ -161,7 +156,7 @@ class DataPipeline:
                 size=config.pipeline.batch_size
             )
             
-            documents = await elasticsearch_client.search_documents(elasticsearch_query)
+            documents = elasticsearch_client.search_documents(elasticsearch_query)
             
             if not documents:
                 logger.info("No documents found matching the query")
@@ -258,7 +253,7 @@ class DataPipeline:
         """Perform health check on all components."""
         try:
             health_status = {
-                "elasticsearch": await elasticsearch_client.health_check(),
+                "elasticsearch": elasticsearch_client.health_check(),
                 "firebase": firebase_client.test_connection(),
                 "pipeline": self.is_running,
                 "timestamp": datetime.utcnow()

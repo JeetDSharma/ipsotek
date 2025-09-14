@@ -1,10 +1,9 @@
 """
-Elasticsearch client for data ingestion.
+Elasticsearch client for data ingestion (synchronous version).
 """
-import asyncio
 from datetime import datetime, timedelta
-from typing import List, Dict, Any, Optional, AsyncGenerator
-from elasticsearch import AsyncElasticsearch
+from typing import List, Dict, Any, Optional
+from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import NotFoundError, ConnectionError, RequestError
 from loguru import logger
 
@@ -16,10 +15,10 @@ class ElasticsearchClient:
     """Client for interacting with Elasticsearch."""
     
     def __init__(self):
-        self.client: Optional[AsyncElasticsearch] = None
+        self.client: Optional[Elasticsearch] = None
         self.is_connected = False
     
-    async def connect(self) -> bool:
+    def connect(self) -> bool:
         """Establish connection to Elasticsearch."""
         try:
             connection_params = {
@@ -35,10 +34,10 @@ class ElasticsearchClient:
                     config.elasticsearch.password
                 )
             
-            self.client = AsyncElasticsearch(**connection_params)
+            self.client = Elasticsearch(**connection_params)
             
             # Test connection
-            await self.client.ping()
+            self.client.ping()
             self.is_connected = True
             logger.info(f"Connected to Elasticsearch at {config.get_elasticsearch_url()}")
             return True
@@ -48,20 +47,20 @@ class ElasticsearchClient:
             self.is_connected = False
             return False
     
-    async def disconnect(self):
+    def disconnect(self):
         """Close connection to Elasticsearch."""
         if self.client:
-            await self.client.close()
+            self.client.close()
             self.is_connected = False
             logger.info("Disconnected from Elasticsearch")
     
-    async def health_check(self) -> bool:
+    def health_check(self) -> bool:
         """Check Elasticsearch cluster health."""
         try:
             if not self.client:
                 return False
             
-            health = await self.client.cluster.health()
+            health = self.client.cluster.health()
             logger.debug(f"Elasticsearch health: {health['status']}")
             return health["status"] in ["green", "yellow"]
             
@@ -69,13 +68,13 @@ class ElasticsearchClient:
             logger.error(f"Elasticsearch health check failed: {e}")
             return False
     
-    async def get_index_info(self, index_name: str) -> Optional[Dict[str, Any]]:
+    def get_index_info(self, index_name: str) -> Optional[Dict[str, Any]]:
         """Get information about an index."""
         try:
             if not self.client:
                 return None
             
-            info = await self.client.indices.get(index=index_name)
+            info = self.client.indices.get(index=index_name)
             return info.get(index_name)
             
         except NotFoundError:
@@ -85,11 +84,7 @@ class ElasticsearchClient:
             logger.error(f"Failed to get index info for '{index_name}': {e}")
             return None
     
-    async def search_documents(
-        self,
-        query: ElasticsearchQuery,
-        scroll_timeout: str = "1m"
-    ) -> List[ElasticsearchHit]:
+    def search_documents(self, query: ElasticsearchQuery) -> List[ElasticsearchHit]:
         """Search for documents in Elasticsearch."""
         try:
             if not self.client:
@@ -106,10 +101,7 @@ class ElasticsearchClient:
             if query.sort:
                 search_params["body"]["sort"] = query.sort
             
-            if query.scroll:
-                search_params["scroll"] = query.scroll
-            
-            response = await self.client.search(**search_params)
+            response = self.client.search(**search_params)
             search_response = ElasticsearchSearchResponse(**response)
             
             return search_response.get_documents()
@@ -118,29 +110,7 @@ class ElasticsearchClient:
             logger.error(f"Failed to search documents: {e}")
             raise
     
-    async def scroll_documents(
-        self,
-        scroll_id: str,
-        scroll_timeout: str = "1m"
-    ) -> List[ElasticsearchHit]:
-        """Continue scrolling through search results."""
-        try:
-            if not self.client:
-                raise Exception("Elasticsearch client not connected")
-            
-            response = await self.client.scroll(
-                scroll_id=scroll_id,
-                scroll=scroll_timeout
-            )
-            
-            search_response = ElasticsearchSearchResponse(**response)
-            return search_response.get_documents()
-            
-        except (ConnectionError, RequestError) as e:
-            logger.error(f"Failed to scroll documents: {e}")
-            raise
-    
-    async def get_recent_documents(
+    def get_recent_documents(
         self,
         index_name: str,
         minutes_back: int = 5,
@@ -167,56 +137,62 @@ class ElasticsearchClient:
                 sort=[{"@timestamp": {"order": "desc"}}]
             )
             
-            return await self.search_documents(query)
+            return self.search_documents(query)
             
         except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to get recent documents: {e}")
             raise
     
-    async def get_all_documents_stream(
+    def get_all_documents(
         self,
         index_name: str,
-        batch_size: int = 100,
-        scroll_timeout: str = "1m"
-    ) -> AsyncGenerator[List[ElasticsearchHit], None]:
-        """Stream all documents from an index using scroll API."""
+        batch_size: int = 100
+    ) -> List[ElasticsearchHit]:
+        """Get all documents from an index using scroll API."""
         try:
             # Initial search with scroll
             query = ElasticsearchQuery(
                 index=index_name,
                 query={"match_all": {}},
-                size=batch_size,
-                scroll=scroll_timeout
+                size=batch_size
             )
             
-            documents = await self.search_documents(query)
-            scroll_id = None
+            # Use scroll API for large datasets
+            response = self.client.search(
+                index=index_name,
+                body={
+                    "query": {"match_all": {}},
+                    "size": batch_size
+                },
+                scroll="1m"
+            )
             
-            # Extract scroll_id from the response
-            if documents and hasattr(documents[0], '_scroll_id'):
-                scroll_id = documents[0]._scroll_id
+            documents = []
+            scroll_id = response.get("_scroll_id")
             
-            yield documents
+            # Process first batch
+            for hit in response["hits"]["hits"]:
+                documents.append(ElasticsearchHit(**hit))
             
             # Continue scrolling
-            while documents:
-                if not scroll_id:
-                    break
+            while scroll_id and len(response["hits"]["hits"]) > 0:
+                response = self.client.scroll(
+                    scroll_id=scroll_id,
+                    scroll="1m"
+                )
                 
-                documents = await self.scroll_documents(scroll_id, scroll_timeout)
-                yield documents
+                for hit in response["hits"]["hits"]:
+                    documents.append(ElasticsearchHit(**hit))
                 
-                # Update scroll_id for next iteration
-                if documents and hasattr(documents[0], '_scroll_id'):
-                    scroll_id = documents[0]._scroll_id
-                else:
-                    break
+                scroll_id = response.get("_scroll_id")
+            
+            return documents
             
         except (ConnectionError, RequestError) as e:
-            logger.error(f"Failed to stream documents: {e}")
+            logger.error(f"Failed to get all documents: {e}")
             raise
     
-    async def count_documents(self, index_name: str, query: Dict[str, Any] = None) -> int:
+    def count_documents(self, index_name: str, query: Dict[str, Any] = None) -> int:
         """Count documents in an index."""
         try:
             if not self.client:
@@ -226,20 +202,20 @@ class ElasticsearchClient:
             if query:
                 count_params["body"] = {"query": query}
             
-            response = await self.client.count(**count_params)
+            response = self.client.count(**count_params)
             return response["count"]
             
         except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to count documents: {e}")
             raise
     
-    async def test_connection(self) -> bool:
+    def test_connection(self) -> bool:
         """Test the Elasticsearch connection."""
         try:
             if not self.client:
                 return False
             
-            await self.client.ping()
+            self.client.ping()
             return True
             
         except (ConnectionError, RequestError) as e:
