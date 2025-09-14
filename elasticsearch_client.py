@@ -5,7 +5,7 @@ import asyncio
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, AsyncGenerator
 from elasticsearch import AsyncElasticsearch
-from elasticsearch.exceptions import ElasticsearchException, NotFoundError
+from elasticsearch.exceptions import NotFoundError, ConnectionError, RequestError
 from loguru import logger
 
 from config import config
@@ -43,7 +43,7 @@ class ElasticsearchClient:
             logger.info(f"Connected to Elasticsearch at {config.get_elasticsearch_url()}")
             return True
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to connect to Elasticsearch: {e}")
             self.is_connected = False
             return False
@@ -65,7 +65,7 @@ class ElasticsearchClient:
             logger.debug(f"Elasticsearch health: {health['status']}")
             return health["status"] in ["green", "yellow"]
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Elasticsearch health check failed: {e}")
             return False
     
@@ -81,7 +81,7 @@ class ElasticsearchClient:
         except NotFoundError:
             logger.warning(f"Index '{index_name}' not found")
             return None
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to get index info for '{index_name}': {e}")
             return None
     
@@ -114,7 +114,7 @@ class ElasticsearchClient:
             
             return search_response.get_documents()
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to search documents: {e}")
             raise
     
@@ -136,7 +136,7 @@ class ElasticsearchClient:
             search_response = ElasticsearchSearchResponse(**response)
             return search_response.get_documents()
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to scroll documents: {e}")
             raise
     
@@ -169,7 +169,7 @@ class ElasticsearchClient:
             
             return await self.search_documents(query)
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to get recent documents: {e}")
             raise
     
@@ -212,7 +212,7 @@ class ElasticsearchClient:
                 else:
                     break
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to stream documents: {e}")
             raise
     
@@ -229,7 +229,7 @@ class ElasticsearchClient:
             response = await self.client.count(**count_params)
             return response["count"]
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Failed to count documents: {e}")
             raise
     
@@ -242,7 +242,7 @@ class ElasticsearchClient:
             await self.client.ping()
             return True
             
-        except Exception as e:
+        except (ConnectionError, RequestError) as e:
             logger.error(f"Elasticsearch connection test failed: {e}")
             return False
 
