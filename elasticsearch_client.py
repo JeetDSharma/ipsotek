@@ -21,20 +21,21 @@ class ElasticsearchClient:
     def connect(self) -> bool:
         """Establish connection to Elasticsearch."""
         try:
-            # Build connection URL with authentication
-            if config.elasticsearch.username and config.elasticsearch.password:
-                url = f"http://{config.elasticsearch.username}:{config.elasticsearch.password}@{config.elasticsearch.host}:{config.elasticsearch.port}"
-            else:
-                url = config.get_elasticsearch_url()
-            
             connection_params = {
-                "hosts": [url],
+                "hosts": [config.get_elasticsearch_url()],
                 "verify_certs": config.elasticsearch.verify_certs,
                 "ssl_show_warn": False,
                 "timeout": 30,
                 "max_retries": 3,
                 "retry_on_timeout": True,
             }
+            
+            # Add authentication if provided
+            if config.elasticsearch.username and config.elasticsearch.password:
+                connection_params["basic_auth"] = (
+                    config.elasticsearch.username,
+                    config.elasticsearch.password
+                )
             
             self.client = Elasticsearch(**connection_params)
             
