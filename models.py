@@ -37,7 +37,12 @@ class ElasticsearchSearchResponse(BaseModel):
         """Extract documents from the search response."""
         documents = []
         for hit_data in self.hits.get("hits", []):
-            documents.append(ElasticsearchHit(**hit_data))
+            try:
+                documents.append(ElasticsearchHit(**hit_data))
+            except Exception as e:
+                print(f"Error creating ElasticsearchHit: {e}")
+                print(f"Hit data keys: {list(hit_data.keys())}")
+                raise
         return documents
 
 

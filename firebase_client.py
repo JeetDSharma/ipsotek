@@ -53,13 +53,14 @@ class FirebaseClient:
         collection_name: str
     ) -> FirebaseDocument:
         """Convert Elasticsearch hit to Firebase document."""
-        # Handle cases where _index might not be available
+        # Handle cases where attributes might not be available
         index_name = getattr(hit, '_index', 'unknown_index')
         doc_id = getattr(hit, '_id', 'unknown_id')
+        source_data = getattr(hit, '_source', {})
         
         return FirebaseDocument(
             id=f"{index_name}_{doc_id}",  # Create unique ID
-            data=hit._source,
+            data=source_data,
             source_index=index_name,
             source_id=doc_id
         )
