@@ -61,9 +61,11 @@ async def test_with_existing_data():
                 # Print sample document info
                 if documents:
                     sample_doc = documents[0]
-                    logger.info(f"Sample document ID: {sample_doc._id}")
-                    logger.info(f"Sample event: {sample_doc._source.get('event_name', 'N/A')}")
-                    logger.info(f"Sample timestamp: {sample_doc._source.get('@timestamp', 'N/A')}")
+                    doc_id = getattr(sample_doc, '_id', 'unknown_id')
+                    source_data = getattr(sample_doc, '_source', {})
+                    logger.info(f"Sample document ID: {doc_id}")
+                    logger.info(f"Sample event: {source_data.get('event_name', 'N/A')}")
+                    logger.info(f"Sample timestamp: {source_data.get('@timestamp', 'N/A')}")
                 
                 return True
             else:
