@@ -48,14 +48,16 @@ class ElasticsearchSearchResponse(BaseModel):
         documents = []
         for hit_data in self.hits.get("hits", []):
             try:
-                # Manually create ElasticsearchHit with explicit field mapping
-                hit = ElasticsearchHit(
-                    _index=hit_data.get("_index", ""),
-                    _id=hit_data.get("_id", ""),
-                    _score=hit_data.get("_score"),
-                    _source=hit_data.get("_source", {}),
-                    _type=hit_data.get("_type")
-                )
+                # Create a simple object that behaves like ElasticsearchHit
+                class SimpleHit:
+                    def __init__(self, hit_data):
+                        self._index = hit_data.get("_index", "")
+                        self._id = hit_data.get("_id", "")
+                        self._score = hit_data.get("_score")
+                        self._source = hit_data.get("_source", {})
+                        self._type = hit_data.get("_type")
+                
+                hit = SimpleHit(hit_data)
                 documents.append(hit)
             except Exception as e:
                 print(f"Error creating ElasticsearchHit: {e}")
