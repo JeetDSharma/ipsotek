@@ -2,6 +2,7 @@
 Simplified Firebase client that works with raw dictionaries.
 """
 import json
+import time
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Union
 import firebase_admin
@@ -92,36 +93,55 @@ class SimpleFirebaseClient:
             if not documents:
                 return 0
             
-            # Firestore batch limit is 500 operations
-            batch_size = 500
+            # Use smaller batch size to avoid timeouts
+            batch_size = 50  # Much smaller batches for reliability
             successful_stores = 0
+            total_documents = len(documents)
             
-            for i in range(0, len(documents), batch_size):
-                batch = self.db.batch()
+            logger.info(f"Storing {total_documents} documents in batches of {batch_size}")
+            
+            for i in range(0, total_documents, batch_size):
                 batch_documents = documents[i:i + batch_size]
+                batch_num = (i // batch_size) + 1
+                total_batches = (total_documents + batch_size - 1) // batch_size
                 
-                for doc in batch_documents:
-                    # Create unique document ID
-                    doc_id = f"{doc.get('_index', 'unknown')}_{doc.get('_id', 'unknown')}"
-                    
-                    # Prepare document data
-                    firestore_data = self._prepare_document_for_firestore(doc.get('_source', {}))
-                    
-                    # Add source metadata
-                    firestore_data["source_index"] = doc.get('_index', 'unknown')
-                    firestore_data["source_id"] = doc.get('_id', 'unknown')
-                    
-                    # Set document in batch
-                    doc_ref = self.db.collection(collection_name).document(doc_id)
-                    batch.set(doc_ref, firestore_data)
+                logger.info(f"Processing batch {batch_num}/{total_batches} ({len(batch_documents)} documents)")
                 
-                # Commit the batch
-                batch.commit()
-                successful_stores += len(batch_documents)
+                try:
+                    # Create batch
+                    batch = self.db.batch()
+                    
+                    for doc in batch_documents:
+                        # Create unique document ID
+                        doc_id = f"{doc.get('_index', 'unknown')}_{doc.get('_id', 'unknown')}"
+                        
+                        # Prepare document data
+                        firestore_data = self._prepare_document_for_firestore(doc.get('_source', {}))
+                        
+                        # Add source metadata
+                        firestore_data["source_index"] = doc.get('_index', 'unknown')
+                        firestore_data["source_id"] = doc.get('_id', 'unknown')
+                        
+                        # Set document in batch
+                        doc_ref = self.db.collection(collection_name).document(doc_id)
+                        batch.set(doc_ref, firestore_data)
+                    
+                    # Commit the batch
+                    batch.commit()
+                    successful_stores += len(batch_documents)
+                    
+                    logger.info(f"✅ Successfully stored batch {batch_num}/{total_batches} ({len(batch_documents)} documents)")
+                    
+                except Exception as batch_error:
+                    logger.error(f"❌ Failed to store batch {batch_num}/{total_batches}: {batch_error}")
+                    # Continue with next batch instead of failing completely
+                    continue
                 
-                logger.debug(f"Stored batch of {len(batch_documents)} documents")
+                # Small delay between batches to avoid overwhelming Firebase
+                if i + batch_size < total_documents:
+                    time.sleep(0.2)  # 200ms delay between batches
             
-            logger.info(f"Successfully stored {successful_stores} documents in {collection_name}")
+            logger.info(f"Successfully stored {successful_stores}/{total_documents} documents in {collection_name}")
             return successful_stores
             
         except Exception as e:
