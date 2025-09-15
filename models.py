@@ -19,14 +19,21 @@ class ElasticsearchDocument(BaseModel):
 
 class ElasticsearchHit(BaseModel):
     """Model for Elasticsearch search hit."""
-    _index: str = Field(alias="_index")
-    _id: str = Field(alias="_id")
-    _score: Optional[float] = Field(default=None, alias="_score")
-    _source: Dict[str, Any] = Field(alias="_source")
-    _type: Optional[str] = Field(default=None, alias="_type")
+    _index: str
+    _id: str
+    _score: Optional[float] = None
+    _source: Dict[str, Any]
+    _type: Optional[str] = None
     
     class Config:
         allow_population_by_field_name = True
+        fields = {
+            '_index': '_index',
+            '_id': '_id',
+            '_score': '_score',
+            '_source': '_source',
+            '_type': '_type'
+        }
 
 
 class ElasticsearchSearchResponse(BaseModel):
@@ -41,7 +48,15 @@ class ElasticsearchSearchResponse(BaseModel):
         documents = []
         for hit_data in self.hits.get("hits", []):
             try:
-                documents.append(ElasticsearchHit(**hit_data))
+                # Manually create ElasticsearchHit with explicit field mapping
+                hit = ElasticsearchHit(
+                    _index=hit_data.get("_index", ""),
+                    _id=hit_data.get("_id", ""),
+                    _score=hit_data.get("_score"),
+                    _source=hit_data.get("_source", {}),
+                    _type=hit_data.get("_type")
+                )
+                documents.append(hit)
             except Exception as e:
                 print(f"Error creating ElasticsearchHit: {e}")
                 print(f"Hit data keys: {list(hit_data.keys())}")
