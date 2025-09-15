@@ -19,11 +19,14 @@ class ElasticsearchDocument(BaseModel):
 
 class ElasticsearchHit(BaseModel):
     """Model for Elasticsearch search hit."""
-    _index: str
-    _id: str
-    _score: Optional[float] = None
-    _source: Dict[str, Any]
-    _type: Optional[str] = None
+    _index: str = Field(alias="_index")
+    _id: str = Field(alias="_id")
+    _score: Optional[float] = Field(default=None, alias="_score")
+    _source: Dict[str, Any] = Field(alias="_source")
+    _type: Optional[str] = Field(default=None, alias="_type")
+    
+    class Config:
+        allow_population_by_field_name = True
 
 
 class ElasticsearchSearchResponse(BaseModel):
