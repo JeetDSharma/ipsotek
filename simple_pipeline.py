@@ -166,6 +166,51 @@ class SimpleDataPipeline:
             "is_running": self.is_running
         }
     
+    async def run_continuous_pipeline(self):
+        """Run the pipeline continuously, processing data at regular intervals."""
+        try:
+            logger.info("Starting continuous pipeline...")
+            self.is_running = True
+            
+            while self.is_running:
+                start_time = time.time()
+                
+                try:
+                    # Process recent data
+                    processed_count = await self.process_recent_data(
+                        minutes_back=config.pipeline.polling_interval_seconds // 60 + 1
+                    )
+                    
+                    # Calculate processing time
+                    processing_time = time.time() - start_time
+                    self.stats["processing_time_seconds"] = processing_time
+                    
+                    logger.info(
+                        f"Pipeline cycle completed. "
+                        f"Processed: {processed_count}, "
+                        f"Time: {processing_time:.2f}s"
+                    )
+                    
+                except Exception as e:
+                    logger.error(f"Error in pipeline cycle: {e}")
+                    self.stats["total_failed"] += 1
+                    self.stats["last_error"] = str(e)
+                
+                # Wait for next cycle
+                await asyncio.sleep(config.pipeline.polling_interval_seconds)
+            
+        except KeyboardInterrupt:
+            logger.info("Pipeline stopped by user")
+        except Exception as e:
+            logger.error(f"Pipeline error: {e}")
+        finally:
+            self.is_running = False
+    
+    def stop_pipeline(self):
+        """Stop the continuous pipeline."""
+        logger.info("Stopping pipeline...")
+        self.is_running = False
+
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on all components."""
         try:

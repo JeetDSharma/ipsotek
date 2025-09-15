@@ -94,6 +94,22 @@ async def run_full_sync():
         await data_pipeline.cleanup()
 
 
+async def run_continuous_mode():
+    """Run the pipeline in continuous mode."""
+    logger.info("Starting pipeline in continuous mode...")
+    
+    if not await data_pipeline.initialize():
+        logger.error("Failed to initialize pipeline")
+        return False
+    
+    try:
+        await data_pipeline.run_continuous_pipeline()
+    finally:
+        await data_pipeline.cleanup()
+    
+    return True
+
+
 async def health_check():
     """Perform health check on all components."""
     logger.info("Performing health check...")
@@ -125,7 +141,7 @@ def main():
     parser = argparse.ArgumentParser(description="Simplified Elasticsearch to Firebase Data Pipeline")
     parser.add_argument(
         "--mode",
-        choices=["single", "full-sync", "health-check"],
+        choices=["single", "full-sync", "continuous", "health-check"],
         default="single",
         help="Pipeline execution mode"
     )
@@ -165,6 +181,8 @@ def main():
             success = asyncio.run(run_single_execution())
         elif args.mode == "full-sync":
             success = asyncio.run(run_full_sync())
+        elif args.mode == "continuous":
+            success = asyncio.run(run_continuous_mode())
         elif args.mode == "health-check":
             success = asyncio.run(health_check())
         else:
