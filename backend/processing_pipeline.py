@@ -11,6 +11,7 @@ from elasticsearch_client import elasticsearch_client
 from firebase_client import firebase_client
 from notifications import notification_service
 from event_statistics import event_statistics_service
+from sms_service import sms_service
 
 
 class SimpleDataPipeline:
@@ -28,7 +29,7 @@ class SimpleDataPipeline:
         }
         
     async def initialize(self) -> bool:
-        """Initialize the pipeline by connecting to both services."""
+        """Initialize the pipeline by connecting to all services."""
         try:
             logger.info("Initializing simplified data pipeline...")
             
@@ -41,6 +42,10 @@ class SimpleDataPipeline:
             if not elasticsearch_client.connect():
                 logger.error("Failed to connect to Elasticsearch")
                 return False
+            
+            # Initialize SMS service
+            if not sms_service.initialize():
+                logger.warning("SMS service initialization failed - SMS alerts will be disabled")
             
             # Test connections
             if not firebase_client.test_connection():
@@ -307,6 +312,7 @@ class SimpleDataPipeline:
                     if committed > 0:
                         batch_number += 1
                         self._send_batch_notification(committed, batch_number)
+                        self._send_sms_alerts_for_batch(staged, batch_number)
                         self._update_event_statistics()
                     
                     staged = []
@@ -323,6 +329,7 @@ class SimpleDataPipeline:
             if committed > 0:
                 batch_number += 1
                 self._send_batch_notification(committed, batch_number)
+                self._send_sms_alerts_for_batch(staged, batch_number)
                 self._update_event_statistics()
         
         return total_committed
@@ -348,6 +355,53 @@ class SimpleDataPipeline:
                 
         except Exception as e:
             logger.error(f"Error sending batch notification: {e}")
+            return False
+    
+    def _send_sms_alerts_for_batch(self, documents: List[Dict[str, Any]], batch_number: int = None) -> bool:
+        """Send SMS alerts for each event in the batch."""
+        try:
+            if not config.twilio.enabled:
+                logger.debug("SMS alerts disabled, skipping SMS notifications")
+                return True
+            
+            success_count = 0
+            for doc in documents:
+                try:
+                    result = sms_service.send_event_alert(doc)
+                    if result.get("success"):
+                        success_count += 1
+                    else:
+                        logger.warning(f"Failed to send SMS for event {doc.get('_id')}: {result.get('error')}")
+                except Exception as e:
+                    logger.error(f"Error sending SMS for event {doc.get('_id')}: {e}")
+            
+            if success_count > 0:
+                logger.info(f"Sent {success_count} SMS alerts for batch {batch_number or 'unknown'}")
+                return True
+            else:
+                logger.warning(f"No SMS alerts sent for batch {batch_number or 'unknown'}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending SMS alerts for batch: {e}")
+            return False
+    
+    def _send_single_event_sms(self, event_data: Dict[str, Any]) -> bool:
+        """Send SMS alert for a single event."""
+        try:
+            if not config.twilio.enabled:
+                return True
+            
+            result = sms_service.send_event_alert(event_data)
+            if result.get("success"):
+                logger.info(f"SMS alert sent for event {event_data.get('_id')}")
+                return True
+            else:
+                logger.error(f"Failed to send SMS for event {event_data.get('_id')}: {result.get('error')}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending SMS for event {event_data.get('_id')}: {e}")
             return False
     
     def _update_event_statistics(self) -> bool:
@@ -431,16 +485,19 @@ class SimpleDataPipeline:
             health_status = {
                 "elasticsearch": elasticsearch_client.health_check(),
                 "firebase": firebase_client.test_connection(),
+                "sms": sms_service.test_connection() if config.twilio.enabled else True,
                 "pipeline": self.is_running,
                 "timestamp": datetime.utcnow()
             }
             
             overall_health = all([
                 health_status["elasticsearch"],
-                health_status["firebase"]
+                health_status["firebase"],
+                health_status["sms"] if config.twilio.enabled else True
             ])
             
             health_status["overall"] = overall_health
+            health_status["sms_status"] = sms_service.get_status()
             
             return health_status
             
@@ -449,6 +506,7 @@ class SimpleDataPipeline:
             return {
                 "elasticsearch": False,
                 "firebase": False,
+                "sms": False,
                 "pipeline": False,
                 "overall": False,
                 "error": str(e),

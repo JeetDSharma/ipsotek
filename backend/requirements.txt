@@ -9,5 +9,8 @@ loguru>=0.6.0
 # Image processing
 Pillow>=9.0.0
 
+# SMS notifications
+twilio>=8.0.0
+
 # Optional: for better performance
 urllib3>=1.26.0

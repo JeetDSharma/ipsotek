@@ -52,6 +52,18 @@ class PipelineConfig(BaseSettings):
         env_file = ".env"
 
 
+class TwilioConfig(BaseSettings):
+    """Twilio SMS configuration."""
+    account_sid: str = Field(env="TWILIO_ACCOUNT_SID")
+    auth_token: str = Field(env="TWILIO_AUTH_TOKEN")
+    from_phone: str = Field(env="TWILIO_FROM_PHONE")
+    to_phone: str = Field(env="TWILIO_TO_PHONE")
+    enabled: bool = Field(default=True, env="TWILIO_SMS_ENABLED")
+    
+    class Config:
+        env_file = ".env"
+
+
 class LoggingConfig(BaseSettings):
     """Logging configuration."""
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
@@ -68,6 +80,7 @@ class Config:
         self.elasticsearch = ElasticsearchConfig()
         self.firebase = FirebaseConfig()
         self.pipeline = PipelineConfig()
+        self.twilio = TwilioConfig()
         self.logging = LoggingConfig()
     
     def get_elasticsearch_url(self) -> str:
