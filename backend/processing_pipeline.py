@@ -371,7 +371,11 @@ class SimpleDataPipeline:
                     if result.get("success"):
                         success_count += 1
                     else:
-                        logger.warning(f"Failed to send SMS for event {doc.get('_id')}: {result.get('error')}")
+                        error_msg = f"Failed to send SMS for event {doc.get('_id')}: {result.get('error')}"
+                        message_sid = result.get("message_sid")
+                        if message_sid:
+                            error_msg += f" (Message SID: {message_sid})"
+                        logger.warning(error_msg)
                 except Exception as e:
                     logger.error(f"Error sending SMS for event {doc.get('_id')}: {e}")
             
@@ -397,7 +401,11 @@ class SimpleDataPipeline:
                 logger.info(f"SMS alert sent for event {event_data.get('_id')}")
                 return True
             else:
-                logger.error(f"Failed to send SMS for event {event_data.get('_id')}: {result.get('error')}")
+                error_msg = f"Failed to send SMS for event {event_data.get('_id')}: {result.get('error')}"
+                message_sid = result.get("message_sid")
+                if message_sid:
+                    error_msg += f" (Message SID: {message_sid})"
+                logger.error(error_msg)
                 return False
                 
         except Exception as e:

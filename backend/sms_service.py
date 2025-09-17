@@ -67,11 +67,18 @@ class SMSService:
             }
             
         except TwilioRestException as e:
-            logger.error(f"Twilio error sending SMS: {e.msg} (Code: {e.code})")
+            # Try to get message SID if the message was created but failed
+            message_sid = getattr(e, 'sid', None) or getattr(e, 'message_sid', None)
+            if message_sid:
+                logger.error(f"Twilio error sending SMS: {e.msg} (Code: {e.code}, Message SID: {message_sid})")
+            else:
+                logger.error(f"Twilio error sending SMS: {e.msg} (Code: {e.code})")
+            
             return {
                 "success": False,
                 "error": f"Twilio error: {e.msg}",
-                "error_code": e.code
+                "error_code": e.code,
+                "message_sid": message_sid
             }
         except Exception as e:
             logger.error(f"Unexpected error sending SMS: {e}")
@@ -176,7 +183,11 @@ class SMSService:
             if result.get("success"):
                 logger.info(f"Event alert SMS sent for event {event_id}")
             else:
-                logger.error(f"Failed to send event alert SMS for event {event_id}: {result.get('error')}")
+                error_msg = f"Failed to send event alert SMS for event {event_id}: {result.get('error')}"
+                message_sid = result.get("message_sid")
+                if message_sid:
+                    error_msg += f" (Message SID: {message_sid})"
+                logger.error(error_msg)
             
             return result
             
@@ -201,7 +212,11 @@ class SMSService:
             if result.get("success"):
                 logger.info(f"Batch alert SMS sent for {event_count} events")
             else:
-                logger.error(f"Failed to send batch alert SMS: {result.get('error')}")
+                error_msg = f"Failed to send batch alert SMS: {result.get('error')}"
+                message_sid = result.get("message_sid")
+                if message_sid:
+                    error_msg += f" (Message SID: {message_sid})"
+                logger.error(error_msg)
             
             return result
             
