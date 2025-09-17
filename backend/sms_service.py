@@ -151,7 +151,6 @@ class SMSService:
             timestamp = event_source.get("@timestamp", "Unknown time")
             location = event_source.get("location", "Unknown location")
             event_type = self._extract_event_name(event_source)
-            description = event_source.get("description", "Event detected")
             
             # Format location with Google Maps URL if coordinates available
             formatted_location = self._format_location_with_maps(location)
@@ -160,19 +159,12 @@ class SMSService:
             message = f"🚨 SECURITY ALERT 🚨\n"
             message += f"📋 Type: {event_type}\n"
             message += f"⏰ Time: {timestamp}\n"
-            message += f"{formatted_location}\n"
-            message += f"📝 Description: {description}\n"
-            message += f"🆔 Event ID: {event_id}"
+            message += f"{formatted_location}"
             
             # Add camera info if available
             camera_info = event_source.get("camera_name") or event_source.get("camera_id") or event_source.get("source")
             if camera_info:
                 message += f"\n📹 Camera: {camera_info}"
-            
-            # Add severity if available
-            severity = event_source.get("severity") or event_source.get("priority") or event_source.get("level")
-            if severity:
-                message += f"\n⚠️ Severity: {severity}"
             
             # Truncate message if too long (SMS limit is 1600 characters)
             if len(message) > 1500:
