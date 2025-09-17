@@ -77,6 +77,61 @@ class SMSService:
             logger.error(f"Unexpected error sending SMS: {e}")
             return {"success": False, "error": str(e)}
     
+    def _format_location_with_maps(self, location: Any) -> str:
+        """Format location data and include Google Maps URL if coordinates are available."""
+        try:
+            if isinstance(location, dict):
+                lat = location.get("lat")
+                lon = location.get("lon")
+                
+                if lat is not None and lon is not None:
+                    # Create Google Maps URL
+                    maps_url = f"https://maps.google.com/maps?q={lat},{lon}"
+                    return f"📍 Coordinates: {lat:.6f}, {lon:.6f}\n🗺️ Map: {maps_url}"
+                else:
+                    return f"📍 Location: {location}"
+            elif isinstance(location, str):
+                return f"📍 Location: {location}"
+            else:
+                return f"📍 Location: {location}"
+        except Exception as e:
+            logger.warning(f"Error formatting location: {e}")
+            return f"📍 Location: {location}"
+    
+    def _extract_event_name(self, event_source: Dict[str, Any]) -> str:
+        """Extract the most specific event name/type from the event data."""
+        # Try multiple possible field names for event type/name
+        possible_fields = [
+            "event_name",
+            "event_type", 
+            "alert_type",
+            "detection_type",
+            "incident_type",
+            "alarm_type",
+            "category",
+            "type",
+            "name",
+            "title"
+        ]
+        
+        for field in possible_fields:
+            value = event_source.get(field)
+            if value and isinstance(value, str) and value.strip():
+                return value.strip()
+        
+        # If no specific event type found, try to infer from other fields
+        if "crowd" in str(event_source).lower():
+            return "Crowd Management Alert"
+        elif "intrusion" in str(event_source).lower():
+            return "Intrusion Detection Alert"
+        elif "fire" in str(event_source).lower():
+            return "Fire Detection Alert"
+        elif "motion" in str(event_source).lower():
+            return "Motion Detection Alert"
+        
+        # Default fallback
+        return "Security Event"
+
     def send_event_alert(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
         """Send an SMS alert for a specific event."""
         try:
@@ -88,16 +143,29 @@ class SMSService:
             # Extract relevant fields from the event
             timestamp = event_source.get("@timestamp", "Unknown time")
             location = event_source.get("location", "Unknown location")
-            event_type = event_source.get("event_type", "Security Event")
+            event_type = self._extract_event_name(event_source)
             description = event_source.get("description", "Event detected")
+            
+            # Format location with Google Maps URL if coordinates available
+            formatted_location = self._format_location_with_maps(location)
             
             # Create alert message
             message = f"🚨 SECURITY ALERT 🚨\n"
-            message += f"Type: {event_type}\n"
-            message += f"Time: {timestamp}\n"
-            message += f"Location: {location}\n"
-            message += f"Description: {description}\n"
-            message += f"Event ID: {event_id}"
+            message += f"📋 Type: {event_type}\n"
+            message += f"⏰ Time: {timestamp}\n"
+            message += f"{formatted_location}\n"
+            message += f"📝 Description: {description}\n"
+            message += f"🆔 Event ID: {event_id}"
+            
+            # Add camera info if available
+            camera_info = event_source.get("camera_name") or event_source.get("camera_id") or event_source.get("source")
+            if camera_info:
+                message += f"\n📹 Camera: {camera_info}"
+            
+            # Add severity if available
+            severity = event_source.get("severity") or event_source.get("priority") or event_source.get("level")
+            if severity:
+                message += f"\n⚠️ Severity: {severity}"
             
             # Truncate message if too long (SMS limit is 1600 characters)
             if len(message) > 1500:

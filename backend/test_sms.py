@@ -68,16 +68,20 @@ def test_event_alert():
     print("EVENT ALERT SMS TEST")
     print("=" * 60)
     
-    # Create a sample event
+    # Create a sample event with coordinates (like your actual data)
     sample_event = {
         "_id": "test_event_123",
         "_index": "security_events",
         "_source": {
             "@timestamp": datetime.utcnow().isoformat(),
-            "event_type": "Crowd Management Alert",
-            "location": "Main Entrance - Camera 01",
+            "event_name": "Crowd Management Alert",  # More specific event name
+            "location": {
+                "lat": 19.01247551946565,
+                "lon": 72.83084797793317
+            },
             "description": "Large crowd detected in restricted area",
-            "severity": "HIGH"
+            "severity": "HIGH",
+            "camera_name": "Main Entrance - Camera 01"
         }
     }
     
