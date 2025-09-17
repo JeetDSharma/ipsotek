@@ -1,16 +1,12 @@
-"""
-Simplified main script without Pydantic models.
-"""
 import asyncio
 import signal
 import sys
 from datetime import datetime
 from loguru import logger
 import argparse
-
+import json 
 from config import config
-from simple_pipeline import data_pipeline
-
+from processing_pipeline import data_pipeline
 
 def setup_logging():
     """Configure logging for the application."""
@@ -35,14 +31,12 @@ def setup_logging():
         compression="zip"
     )
 
-
 def signal_handler(signum, frame):
     """Handle shutdown signals gracefully."""
     logger.info(f"Received signal {signum}, shutting down gracefully...")
     data_pipeline.is_running = False
 
-
-async def run_single_execution():
+async def run_single_execution(limit: int = None):
     """Run the pipeline once."""
     logger.info("Starting single pipeline execution...")
     
@@ -52,7 +46,7 @@ async def run_single_execution():
     
     try:
         # Process recent data
-        processed_count = await data_pipeline.process_recent_data(minutes_back=5)
+        processed_count = await data_pipeline.process_recent_data(minutes_back=5, limit=limit)
         logger.info(f"Single execution completed. Processed {processed_count} documents")
         
         # Print statistics
@@ -67,8 +61,7 @@ async def run_single_execution():
     finally:
         await data_pipeline.cleanup()
 
-
-async def run_full_sync():
+async def run_full_sync(limit: int = None):
     """Run a full synchronization of all data."""
     logger.info("Starting full data synchronization...")
     
@@ -78,7 +71,7 @@ async def run_full_sync():
     
     try:
         # Process all data
-        processed_count = await data_pipeline.process_all_data()
+        processed_count = await data_pipeline.process_all_data(limit=limit)
         logger.info(f"Full sync completed. Processed {processed_count} documents")
         
         # Print statistics
@@ -92,7 +85,6 @@ async def run_full_sync():
         return False
     finally:
         await data_pipeline.cleanup()
-
 
 async def run_continuous_mode():
     """Run the pipeline in continuous mode."""
@@ -108,7 +100,6 @@ async def run_continuous_mode():
         await data_pipeline.cleanup()
     
     return True
-
 
 async def health_check():
     """Perform health check on all components."""
@@ -135,15 +126,19 @@ async def health_check():
     finally:
         await data_pipeline.cleanup()
 
-
 def main():
-    """Main entry point."""
     parser = argparse.ArgumentParser(description="Simplified Elasticsearch to Firebase Data Pipeline")
     parser.add_argument(
         "--mode",
         choices=["single", "full-sync", "continuous", "health-check"],
         default="single",
         help="Pipeline execution mode"
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit number of documents to process (for testing)"
     )
     parser.add_argument(
         "--config-check",
@@ -178,9 +173,9 @@ def main():
     try:
         # Run the appropriate mode
         if args.mode == "single":
-            success = asyncio.run(run_single_execution())
+            success = asyncio.run(run_single_execution(limit=args.limit))
         elif args.mode == "full-sync":
-            success = asyncio.run(run_full_sync())
+            success = asyncio.run(run_full_sync(limit=args.limit))
         elif args.mode == "continuous":
             success = asyncio.run(run_continuous_mode())
         elif args.mode == "health-check":

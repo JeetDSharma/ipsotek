@@ -1,0 +1,638 @@
+2025-09-15 03:49:21 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 03:49:21 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 03:49:21 | INFO     | __main__:main:192 - Started at: 2025-09-15 03:49:21.415092
+2025-09-15 03:49:21 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 03:49:21 | INFO     | __main__:main:197 - Configuration check:
+2025-09-15 03:49:21 | INFO     | __main__:main:198 - Elasticsearch: http://localhost:9200
+2025-09-15 03:49:21 | INFO     | __main__:main:199 - Firebase Project: ipsotek-7dfa1
+2025-09-15 03:49:21 | INFO     | __main__:main:200 - Index: event
+2025-09-15 03:49:21 | INFO     | __main__:main:201 - Collection: event
+2025-09-15 03:49:21 | INFO     | __main__:main:202 - Polling Interval: 30s
+2025-09-15 03:49:21 | INFO     | __main__:main:203 - Batch Size: 100
+2025-09-15 03:49:32 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 03:49:32 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 03:49:32 | INFO     | __main__:main:192 - Started at: 2025-09-15 03:49:32.611282
+2025-09-15 03:49:32 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 03:49:32 | INFO     | __main__:health_check:141 - Performing health check...
+2025-09-15 03:49:32 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 03:49:32 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 03:49:32 | ERROR    | pipeline:initialize:53 - Failed to initialize pipeline: You must have 'aiohttp' installed to use AiohttpHttpNode
+2025-09-15 03:49:32 | ERROR    | __main__:health_check:144 - Failed to initialize pipeline
+2025-09-15 03:49:32 | ERROR    | __main__:main:228 - Pipeline execution failed
+2025-09-15 03:56:47 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 03:56:47 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 03:56:47 | INFO     | __main__:main:192 - Started at: 2025-09-15 03:56:47.657789
+2025-09-15 03:56:47 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 03:56:47 | INFO     | __main__:health_check:141 - Performing health check...
+2025-09-15 03:56:47 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 03:56:47 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 03:56:47 | INFO     | elasticsearch_client:connect:42 - Connected to Elasticsearch at http://localhost:9200
+2025-09-15 03:56:47 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 03:56:47 | ERROR    | elasticsearch_client:health_check:68 - Elasticsearch health check failed: Connection error caused by: ConnectionError(Connection error caused by: ProtocolError(('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))))
+2025-09-15 03:56:47 | INFO     | __main__:health_check:149 - Health check results: {'elasticsearch': False, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 14, 22, 26, 47, 747586), 'overall': False}
+2025-09-15 03:56:47 | WARNING  | __main__:health_check:154 - Some systems are unhealthy
+2025-09-15 03:56:47 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 03:56:47 | INFO     | elasticsearch_client:disconnect:55 - Disconnected from Elasticsearch
+2025-09-15 03:56:47 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 03:56:47 | ERROR    | __main__:main:228 - Pipeline execution failed
+2025-09-15 03:56:52 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 03:56:52 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 03:56:52 | INFO     | __main__:main:192 - Started at: 2025-09-15 03:56:52.195445
+2025-09-15 03:56:52 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 03:56:52 | INFO     | __main__:main:197 - Configuration check:
+2025-09-15 03:56:52 | INFO     | __main__:main:198 - Elasticsearch: http://localhost:9200
+2025-09-15 03:56:52 | INFO     | __main__:main:199 - Firebase Project: ipsotek-7dfa1
+2025-09-15 03:56:52 | INFO     | __main__:main:200 - Index: event
+2025-09-15 03:56:52 | INFO     | __main__:main:201 - Collection: event
+2025-09-15 03:56:52 | INFO     | __main__:main:202 - Polling Interval: 30s
+2025-09-15 03:56:52 | INFO     | __main__:main:203 - Batch Size: 100
+2025-09-15 04:20:18 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 04:20:18 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 04:20:18 | INFO     | __main__:main:192 - Started at: 2025-09-15 04:20:18.813952
+2025-09-15 04:20:18 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 04:20:18 | INFO     | __main__:main:197 - Configuration check:
+2025-09-15 04:20:18 | INFO     | __main__:main:198 - Elasticsearch: https://127.0.0.1:9200
+2025-09-15 04:20:18 | INFO     | __main__:main:199 - Firebase Project: ipsotek-7dfa1
+2025-09-15 04:20:18 | INFO     | __main__:main:200 - Index: event
+2025-09-15 04:20:18 | INFO     | __main__:main:201 - Collection: event
+2025-09-15 04:20:18 | INFO     | __main__:main:202 - Polling Interval: 30s
+2025-09-15 04:20:18 | INFO     | __main__:main:203 - Batch Size: 100
+2025-09-15 04:20:24 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 04:20:24 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 04:20:24 | INFO     | __main__:main:192 - Started at: 2025-09-15 04:20:24.561973
+2025-09-15 04:20:24 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 04:20:24 | INFO     | __main__:health_check:141 - Performing health check...
+2025-09-15 04:20:24 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 04:20:24 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 04:20:24 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 04:20:24 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 04:20:24 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 04:20:24 | INFO     | __main__:health_check:149 - Health check results: {'elasticsearch': True, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 14, 22, 50, 24, 659268), 'overall': True}
+2025-09-15 04:20:24 | INFO     | __main__:health_check:152 - All systems healthy
+2025-09-15 04:20:24 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 04:20:24 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 04:20:24 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 04:20:24 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 04:22:29 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 04:22:29 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 04:22:29 | INFO     | __main__:main:192 - Started at: 2025-09-15 04:22:29.894823
+2025-09-15 04:22:29 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 04:22:29 | INFO     | __main__:run_single_execution:63 - Starting single pipeline execution...
+2025-09-15 04:22:29 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 04:22:29 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 04:22:29 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 04:22:29 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 04:22:29 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 04:22:29 | INFO     | pipeline:process_recent_data:68 - Processing data from the last 5 minutes...
+2025-09-15 04:22:29 | ERROR    | pipeline:process_recent_data:102 - Error processing recent data: 1 validation error for ElasticsearchQuery
+sort -> 0 -> @timestamp
+  str type expected (type=type_error.str)
+2025-09-15 04:22:29 | INFO     | __main__:run_single_execution:72 - Single execution completed. Processed 0 documents
+2025-09-15 04:22:29 | INFO     | __main__:run_single_execution:76 - Pipeline statistics: {'total_processed': 0, 'total_successful': 0, 'total_failed': 1, 'success_rate': 0, 'last_run': datetime.datetime(2025, 9, 14, 22, 52, 29, 996408), 'last_error': '1 validation error for ElasticsearchQuery\nsort -> 0 -> @timestamp\n  str type expected (type=type_error.str)', 'processing_time_seconds': 0.0, 'is_running': False}
+2025-09-15 04:22:29 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 04:22:30 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 04:22:30 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 04:22:30 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 04:56:31 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 04:56:31 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 04:56:31 | INFO     | __main__:main:192 - Started at: 2025-09-15 04:56:31.373159
+2025-09-15 04:56:31 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 04:56:31 | INFO     | __main__:health_check:141 - Performing health check...
+2025-09-15 04:56:31 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 04:56:31 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 04:56:31 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 04:56:31 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 04:56:31 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 04:56:31 | INFO     | __main__:health_check:149 - Health check results: {'elasticsearch': True, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 14, 23, 26, 31, 473150), 'overall': True}
+2025-09-15 04:56:31 | INFO     | __main__:health_check:152 - All systems healthy
+2025-09-15 04:56:31 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 04:56:31 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 04:56:31 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 04:56:31 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 04:56:38 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 04:56:38 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 04:56:38 | INFO     | __main__:main:192 - Started at: 2025-09-15 04:56:38.169826
+2025-09-15 04:56:38 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 04:56:38 | INFO     | __main__:run_single_execution:63 - Starting single pipeline execution...
+2025-09-15 04:56:38 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 04:56:38 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 04:56:38 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 04:56:38 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 04:56:38 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 04:56:38 | INFO     | pipeline:process_recent_data:68 - Processing data from the last 5 minutes...
+2025-09-15 04:56:38 | INFO     | pipeline:process_recent_data:78 - No recent documents found
+2025-09-15 04:56:38 | INFO     | __main__:run_single_execution:72 - Single execution completed. Processed 0 documents
+2025-09-15 04:56:38 | INFO     | __main__:run_single_execution:76 - Pipeline statistics: {'total_processed': 0, 'total_successful': 0, 'total_failed': 0, 'success_rate': 0, 'last_run': None, 'last_error': None, 'processing_time_seconds': 0.0, 'is_running': False}
+2025-09-15 04:56:38 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 04:56:38 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 04:56:38 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 04:56:38 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 05:34:11 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 05:34:11 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 05:34:11 | INFO     | __main__:main:192 - Started at: 2025-09-15 05:34:11.251179
+2025-09-15 05:34:11 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 05:34:11 | INFO     | __main__:run_single_execution:63 - Starting single pipeline execution...
+2025-09-15 05:34:11 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 05:34:11 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 05:34:11 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 05:34:11 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 05:34:11 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 05:34:11 | INFO     | pipeline:process_recent_data:68 - Processing data from the last 5 minutes...
+2025-09-15 05:34:11 | INFO     | pipeline:process_recent_data:78 - No recent documents found
+2025-09-15 05:34:11 | INFO     | __main__:run_single_execution:72 - Single execution completed. Processed 0 documents
+2025-09-15 05:34:11 | INFO     | __main__:run_single_execution:76 - Pipeline statistics: {'total_processed': 0, 'total_successful': 0, 'total_failed': 0, 'success_rate': 0, 'last_run': None, 'last_error': None, 'processing_time_seconds': 0.0, 'is_running': False}
+2025-09-15 05:34:11 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 05:34:11 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 05:34:11 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 05:34:11 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 05:38:00 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 05:38:00 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 05:38:00 | INFO     | __main__:main:192 - Started at: 2025-09-15 05:38:00.529171
+2025-09-15 05:38:00 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 05:38:00 | INFO     | __main__:run_full_sync:89 - Starting full data synchronization...
+2025-09-15 05:38:00 | INFO     | pipeline:initialize:28 - Initializing data pipeline...
+2025-09-15 05:38:00 | INFO     | firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 05:38:00 | INFO     | elasticsearch_client:connect:45 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 05:38:00 | INFO     | elasticsearch_client:connect:46 - Elasticsearch version: 7.17.29
+2025-09-15 05:38:00 | INFO     | pipeline:initialize:49 - Pipeline initialized successfully
+2025-09-15 05:38:00 | INFO     | pipeline:process_all_data:110 - Starting to process all data from Elasticsearch...
+2025-09-15 05:38:01 | INFO     | pipeline:process_all_data:122 - Found 15342 documents
+2025-09-15 05:38:45 | INFO     | firebase_client:store_documents_batch:161 - Successfully stored 15342 documents in event
+2025-09-15 05:38:45 | INFO     | pipeline:process_all_data:139 - Completed processing all data. Total processed: 15342
+2025-09-15 05:38:45 | INFO     | __main__:run_full_sync:98 - Full sync completed. Processed 15342 documents
+2025-09-15 05:38:45 | INFO     | __main__:run_full_sync:102 - Pipeline statistics: {'total_processed': 1, 'total_successful': 1, 'total_failed': 0, 'success_rate': 100.0, 'last_run': datetime.datetime(2025, 9, 15, 0, 8, 45, 899953), 'last_error': None, 'processing_time_seconds': 0.0, 'is_running': False}
+2025-09-15 05:38:45 | INFO     | pipeline:cleanup:59 - Cleaning up pipeline resources...
+2025-09-15 05:38:45 | INFO     | elasticsearch_client:disconnect:59 - Disconnected from Elasticsearch
+2025-09-15 05:38:45 | INFO     | pipeline:cleanup:61 - Pipeline cleanup completed
+2025-09-15 05:38:45 | INFO     | __main__:main:225 - Pipeline execution completed successfully
+2025-09-15 06:43:15 | INFO     | __main__:main:143 - ============================================================
+2025-09-15 06:43:15 | INFO     | __main__:main:144 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 06:43:15 | INFO     | __main__:main:145 - Started at: 2025-09-15 06:43:15.494251
+2025-09-15 06:43:15 | INFO     | __main__:main:146 - ============================================================
+2025-09-15 06:43:15 | INFO     | __main__:health_check:99 - Performing health check...
+2025-09-15 06:43:15 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 06:43:15 | INFO     | simple_firebase_client:initialize:41 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 06:43:15 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 06:43:15 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 06:43:15 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 06:43:15 | INFO     | __main__:health_check:107 - Health check results: {'elasticsearch': True, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 15, 1, 13, 15, 595293), 'overall': True}
+2025-09-15 06:43:15 | INFO     | __main__:health_check:110 - All systems healthy
+2025-09-15 06:43:15 | INFO     | simple_pipeline:cleanup:63 - Cleaning up pipeline resources...
+2025-09-15 06:43:15 | INFO     | simple_elasticsearch_client:disconnect:58 - Disconnected from Elasticsearch
+2025-09-15 06:43:15 | INFO     | simple_pipeline:cleanup:65 - Pipeline cleanup completed
+2025-09-15 06:43:15 | INFO     | __main__:main:175 - Pipeline execution completed successfully
+2025-09-15 06:43:27 | INFO     | __main__:main:143 - ============================================================
+2025-09-15 06:43:27 | INFO     | __main__:main:144 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 06:43:27 | INFO     | __main__:main:145 - Started at: 2025-09-15 06:43:27.695932
+2025-09-15 06:43:27 | INFO     | __main__:main:146 - ============================================================
+2025-09-15 06:43:27 | INFO     | __main__:health_check:99 - Performing health check...
+2025-09-15 06:43:27 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 06:43:27 | INFO     | simple_firebase_client:initialize:41 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 06:43:27 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 06:43:27 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 06:43:27 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 06:43:27 | INFO     | __main__:health_check:107 - Health check results: {'elasticsearch': True, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 15, 1, 13, 27, 793533), 'overall': True}
+2025-09-15 06:43:27 | INFO     | __main__:health_check:110 - All systems healthy
+2025-09-15 06:43:27 | INFO     | simple_pipeline:cleanup:63 - Cleaning up pipeline resources...
+2025-09-15 06:43:27 | INFO     | simple_elasticsearch_client:disconnect:58 - Disconnected from Elasticsearch
+2025-09-15 06:43:27 | INFO     | simple_pipeline:cleanup:65 - Pipeline cleanup completed
+2025-09-15 06:43:27 | INFO     | __main__:main:175 - Pipeline execution completed successfully
+2025-09-15 06:43:35 | INFO     | __main__:main:143 - ============================================================
+2025-09-15 06:43:35 | INFO     | __main__:main:144 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 06:43:35 | INFO     | __main__:main:145 - Started at: 2025-09-15 06:43:35.750520
+2025-09-15 06:43:35 | INFO     | __main__:main:146 - ============================================================
+2025-09-15 06:43:35 | INFO     | __main__:run_single_execution:47 - Starting single pipeline execution...
+2025-09-15 06:43:35 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 06:43:35 | INFO     | simple_firebase_client:initialize:41 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 06:43:35 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 06:43:35 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 06:43:35 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 06:43:35 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 5 minutes...
+2025-09-15 06:43:36 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 06:43:36 | INFO     | __main__:run_single_execution:56 - Single execution completed. Processed 0 documents
+2025-09-15 06:43:36 | INFO     | __main__:run_single_execution:60 - Pipeline statistics: {'total_processed': 0, 'total_successful': 0, 'total_failed': 0, 'last_run': None, 'last_error': None, 'processing_time_seconds': 0.0, 'success_rate': 0, 'is_running': False}
+2025-09-15 06:43:36 | INFO     | simple_pipeline:cleanup:63 - Cleaning up pipeline resources...
+2025-09-15 06:43:36 | INFO     | simple_elasticsearch_client:disconnect:58 - Disconnected from Elasticsearch
+2025-09-15 06:43:36 | INFO     | simple_pipeline:cleanup:65 - Pipeline cleanup completed
+2025-09-15 06:43:36 | INFO     | __main__:main:175 - Pipeline execution completed successfully
+2025-09-15 06:43:51 | INFO     | __main__:main:143 - ============================================================
+2025-09-15 06:43:51 | INFO     | __main__:main:144 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 06:43:51 | INFO     | __main__:main:145 - Started at: 2025-09-15 06:43:51.393752
+2025-09-15 06:43:51 | INFO     | __main__:main:146 - ============================================================
+2025-09-15 06:43:51 | INFO     | __main__:run_full_sync:73 - Starting full data synchronization...
+2025-09-15 06:43:51 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 06:43:51 | INFO     | simple_firebase_client:initialize:41 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 06:43:51 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 06:43:51 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 06:43:51 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 06:43:51 | INFO     | simple_pipeline:process_all_data:116 - Starting to process all data from Elasticsearch...
+2025-09-15 06:43:52 | INFO     | simple_pipeline:process_all_data:128 - Found 15342 documents
+2025-09-15 06:47:09 | ERROR    | simple_firebase_client:store_documents_batch:128 - Failed to store documents batch: 504 Deadline Exceeded
+2025-09-15 06:47:09 | INFO     | simple_pipeline:process_all_data:147 - Completed processing all data. Total processed: 0
+2025-09-15 06:47:09 | INFO     | __main__:run_full_sync:82 - Full sync completed. Processed 0 documents
+2025-09-15 06:47:09 | INFO     | __main__:run_full_sync:86 - Pipeline statistics: {'total_processed': 1, 'total_successful': 0, 'total_failed': 1, 'last_run': datetime.datetime(2025, 9, 15, 1, 17, 9, 563073), 'last_error': 'Failed to store documents', 'processing_time_seconds': 0.0, 'success_rate': 0.0, 'is_running': False}
+2025-09-15 06:47:09 | INFO     | simple_pipeline:cleanup:63 - Cleaning up pipeline resources...
+2025-09-15 06:47:09 | INFO     | simple_elasticsearch_client:disconnect:58 - Disconnected from Elasticsearch
+2025-09-15 06:47:09 | INFO     | simple_pipeline:cleanup:65 - Pipeline cleanup completed
+2025-09-15 06:47:09 | INFO     | __main__:main:175 - Pipeline execution completed successfully
+2025-09-15 09:44:23 | INFO     | __main__:main:190 - ============================================================
+2025-09-15 09:44:23 | INFO     | __main__:main:191 - Elasticsearch to Firebase Data Pipeline
+2025-09-15 09:44:23 | INFO     | __main__:main:192 - Started at: 2025-09-15 09:44:23.880850
+2025-09-15 09:44:23 | INFO     | __main__:main:193 - ============================================================
+2025-09-15 09:44:23 | INFO     | __main__:main:197 - Configuration check:
+2025-09-15 09:44:23 | INFO     | __main__:main:198 - Elasticsearch: https://127.0.0.1:9200
+2025-09-15 09:44:23 | INFO     | __main__:main:199 - Firebase Project: ipsotek-7dfa1
+2025-09-15 09:44:23 | INFO     | __main__:main:200 - Index: event
+2025-09-15 09:44:23 | INFO     | __main__:main:201 - Collection: event
+2025-09-15 09:44:23 | INFO     | __main__:main:202 - Polling Interval: 30s
+2025-09-15 09:44:23 | INFO     | __main__:main:203 - Batch Size: 100
+2025-09-15 09:44:34 | INFO     | __main__:main:159 - ============================================================
+2025-09-15 09:44:34 | INFO     | __main__:main:160 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 09:44:34 | INFO     | __main__:main:161 - Started at: 2025-09-15 09:44:34.894861
+2025-09-15 09:44:34 | INFO     | __main__:main:162 - ============================================================
+2025-09-15 09:44:34 | INFO     | __main__:health_check:115 - Performing health check...
+2025-09-15 09:44:34 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 09:44:34 | INFO     | simple_firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 09:44:34 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 09:44:34 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 09:44:34 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 09:44:34 | INFO     | __main__:health_check:123 - Health check results: {'elasticsearch': True, 'firebase': True, 'pipeline': False, 'timestamp': datetime.datetime(2025, 9, 15, 4, 14, 34, 990468), 'overall': True}
+2025-09-15 09:44:34 | INFO     | __main__:health_check:126 - All systems healthy
+2025-09-15 09:44:34 | INFO     | simple_pipeline:cleanup:63 - Cleaning up pipeline resources...
+2025-09-15 09:44:34 | INFO     | simple_elasticsearch_client:disconnect:58 - Disconnected from Elasticsearch
+2025-09-15 09:44:34 | INFO     | simple_pipeline:cleanup:65 - Pipeline cleanup completed
+2025-09-15 09:44:34 | INFO     | __main__:main:193 - Pipeline execution completed successfully
+2025-09-15 10:02:57 | INFO     | __main__:main:159 - ============================================================
+2025-09-15 10:02:57 | INFO     | __main__:main:160 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 10:02:57 | INFO     | __main__:main:161 - Started at: 2025-09-15 10:02:57.141803
+2025-09-15 10:02:57 | INFO     | __main__:main:162 - ============================================================
+2025-09-15 10:02:57 | INFO     | __main__:run_full_sync:73 - Starting full data synchronization...
+2025-09-15 10:02:57 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 10:02:57 | INFO     | simple_firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 10:02:57 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 10:02:57 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 10:02:57 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 10:02:57 | INFO     | simple_pipeline:process_all_data:123 - Starting to process all data from Elasticsearch...
+2025-09-15 10:02:58 | INFO     | simple_pipeline:process_all_data:135 - Found 15428 documents
+2025-09-15 10:02:58 | INFO     | simple_firebase_client:store_documents_batch:101 - Storing 15428 documents in batches of 50
+2025-09-15 10:02:58 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 1/309 (50 documents)
+2025-09-15 10:03:02 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 1/309 (50 documents)
+2025-09-15 10:03:02 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 2/309 (50 documents)
+2025-09-15 10:03:04 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 2/309 (50 documents)
+2025-09-15 10:03:04 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 3/309 (50 documents)
+2025-09-15 10:03:06 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 3/309 (50 documents)
+2025-09-15 10:03:07 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 4/309 (50 documents)
+2025-09-15 10:03:09 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 4/309 (50 documents)
+2025-09-15 10:03:09 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 5/309 (50 documents)
+2025-09-15 10:03:11 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 5/309 (50 documents)
+2025-09-15 10:03:11 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 6/309 (50 documents)
+2025-09-15 10:03:13 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 6/309 (50 documents)
+2025-09-15 10:03:13 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 7/309 (50 documents)
+2025-09-15 10:04:14 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 7/309: 504 Deadline Exceeded
+2025-09-15 10:04:14 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 8/309 (50 documents)
+2025-09-15 10:05:12 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 8/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:05:12 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 9/309 (50 documents)
+2025-09-15 10:06:07 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 9/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:06:07 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 10/309 (50 documents)
+2025-09-15 10:07:04 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 10/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:07:04 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 11/309 (50 documents)
+2025-09-15 10:07:54 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 11/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:07:54 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 12/309 (50 documents)
+2025-09-15 10:08:53 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 12/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:08:53 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 13/309 (50 documents)
+2025-09-15 10:09:40 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 13/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:09:40 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 14/309 (50 documents)
+2025-09-15 10:10:34 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 14/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:10:34 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 15/309 (50 documents)
+2025-09-15 10:11:30 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 15/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:11:30 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 16/309 (50 documents)
+2025-09-15 10:12:19 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 16/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:12:19 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 17/309 (50 documents)
+2025-09-15 10:13:11 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 17/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:13:11 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 18/309 (50 documents)
+2025-09-15 10:14:08 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 18/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:14:08 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 19/309 (50 documents)
+2025-09-15 10:15:01 | INFO     | simple_firebase_client:store_documents_batch:133 - ✅ Successfully stored batch 19/309 (50 documents)
+2025-09-15 10:15:01 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 20/309 (50 documents)
+2025-09-15 10:15:52 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 20/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:15:52 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 21/309 (50 documents)
+2025-09-15 10:16:49 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 21/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:16:49 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 22/309 (50 documents)
+2025-09-15 10:17:43 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 22/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:17:43 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 23/309 (50 documents)
+2025-09-15 10:18:43 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 23/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:18:43 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 24/309 (50 documents)
+2025-09-15 10:19:40 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 24/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:19:40 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 25/309 (50 documents)
+2025-09-15 10:20:33 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 25/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:20:33 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 26/309 (50 documents)
+2025-09-15 10:21:31 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 26/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:21:31 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 27/309 (50 documents)
+2025-09-15 10:22:24 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 27/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:22:24 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 28/309 (50 documents)
+2025-09-15 10:23:16 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 28/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:23:16 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 29/309 (50 documents)
+2025-09-15 10:24:14 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 29/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:24:14 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 30/309 (50 documents)
+2025-09-15 10:25:14 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 30/309: 504 Deadline Exceeded
+2025-09-15 10:25:14 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 31/309 (50 documents)
+2025-09-15 10:26:10 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 31/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:26:10 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 32/309 (50 documents)
+2025-09-15 10:26:20 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:26:21 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:26:22 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:26:22 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:08 | ERROR    | simple_firebase_client:store_documents_batch:136 - ❌ Failed to store batch 32/309: Timeout of 60.0s exceeded, last exception: 429 Quota exceeded.
+2025-09-15 10:27:08 | INFO     | simple_firebase_client:store_documents_batch:108 - Processing batch 33/309 (50 documents)
+2025-09-15 10:27:13 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:13 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:13 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:13 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:14 | INFO     | __main__:signal_handler:41 - Received signal 2, shutting down gracefully...
+2025-09-15 10:27:59 | INFO     | __main__:main:159 - ============================================================
+2025-09-15 10:27:59 | INFO     | __main__:main:160 - Simplified Elasticsearch to Firebase Data Pipeline
+2025-09-15 10:27:59 | INFO     | __main__:main:161 - Started at: 2025-09-15 10:27:59.410777
+2025-09-15 10:27:59 | INFO     | __main__:main:162 - ============================================================
+2025-09-15 10:27:59 | INFO     | __main__:run_continuous_mode:99 - Starting pipeline in continuous mode...
+2025-09-15 10:27:59 | INFO     | simple_pipeline:initialize:32 - Initializing simplified data pipeline...
+2025-09-15 10:27:59 | INFO     | simple_firebase_client:initialize:42 - Firebase initialized for project: ipsotek-7dfa1
+2025-09-15 10:27:59 | INFO     | simple_elasticsearch_client:connect:44 - Connected to Elasticsearch at https://127.0.0.1:9200
+2025-09-15 10:27:59 | INFO     | simple_elasticsearch_client:connect:45 - Elasticsearch version: 7.17.29
+2025-09-15 10:27:59 | INFO     | simple_pipeline:initialize:53 - Pipeline initialized successfully
+2025-09-15 10:27:59 | INFO     | simple_pipeline:run_continuous_pipeline:176 - Starting continuous pipeline...
+2025-09-15 10:27:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:27:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:27:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.17s
+2025-09-15 10:28:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:28:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:28:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:28:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:28:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:28:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:29:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:29:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:29:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:29:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:29:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:29:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:30:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:30:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:30:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:30:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:30:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:30:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:31:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:31:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:31:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:31:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:31:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:31:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:32:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:32:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:32:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:32:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:32:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:32:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:33:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:33:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:33:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:33:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:33:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:33:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:34:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:34:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:34:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:34:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:34:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:34:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:35:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:35:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:35:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:35:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:35:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:35:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:36:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:36:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:36:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:36:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:36:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:36:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:37:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:37:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:37:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:37:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:37:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:37:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:38:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:38:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:38:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:38:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:38:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:38:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:39:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:39:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:39:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:39:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:39:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:39:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:40:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:40:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:40:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:40:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:40:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:40:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:41:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:41:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:41:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:41:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:41:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:41:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:42:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:42:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:42:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:42:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:42:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:42:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:43:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:43:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:43:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:43:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:43:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:43:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:44:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:44:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:44:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:44:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:44:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:44:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:45:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:45:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:45:29 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:45:59 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:45:59 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:45:59 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:46:29 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:46:29 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:46:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:47:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:47:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:47:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:47:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:47:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:47:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:48:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:48:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:48:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:48:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:48:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:48:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:49:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:49:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:49:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:49:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:49:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:49:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:50:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:50:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:50:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:50:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:50:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:50:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:51:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:51:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:51:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:51:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:51:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:51:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:52:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:52:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:52:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:52:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:52:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:52:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:53:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:53:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:53:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:53:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:53:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:53:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:54:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:54:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:54:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:54:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:54:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:54:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:55:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:55:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:55:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:55:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:55:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:55:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:56:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:56:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:56:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:56:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:56:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:56:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:57:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:57:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:57:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:57:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:57:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:57:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:58:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:58:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:58:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:58:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:58:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:58:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:59:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:59:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:59:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 10:59:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 10:59:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 10:59:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:00:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:00:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:00:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:00:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:00:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:00:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:01:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:01:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:01:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:01:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:01:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:01:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:02:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:02:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:02:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:02:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:02:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:02:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:03:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:03:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:03:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:03:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:03:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:03:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:04:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:04:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:04:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:04:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:04:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:04:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:05:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:05:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:05:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:05:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:05:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:05:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:06:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:06:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:06:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:06:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:06:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:06:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:07:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:07:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:07:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:07:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:07:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:07:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:08:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:08:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:08:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:08:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:08:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:08:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:09:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:09:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:09:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:09:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:09:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:09:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:10:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:10:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:10:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:10:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:10:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:10:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:11:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:11:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:11:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:11:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:11:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:11:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:12:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:12:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:12:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:12:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:12:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:12:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:13:00 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:13:00 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:13:00 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s
+2025-09-15 11:13:30 | INFO     | simple_pipeline:process_recent_data:72 - Processing data from the last 1 minutes...
+2025-09-15 11:13:30 | INFO     | simple_pipeline:process_recent_data:82 - No recent documents found
+2025-09-15 11:13:30 | INFO     | simple_pipeline:run_continuous_pipeline:192 - Pipeline cycle completed. Processed: 0, Time: 0.01s

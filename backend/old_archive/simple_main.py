@@ -1,5 +1,5 @@
 """
-Main entry point for the Elasticsearch to Firebase data pipeline.
+Simplified main script without Pydantic models.
 """
 import asyncio
 import signal
@@ -9,7 +9,7 @@ from loguru import logger
 import argparse
 
 from config import config
-from pipeline import data_pipeline
+from processing_pipeline import data_pipeline
 
 
 def setup_logging():
@@ -39,23 +39,7 @@ def setup_logging():
 def signal_handler(signum, frame):
     """Handle shutdown signals gracefully."""
     logger.info(f"Received signal {signum}, shutting down gracefully...")
-    data_pipeline.stop_pipeline()
-
-
-async def run_continuous_mode():
-    """Run the pipeline in continuous mode."""
-    logger.info("Starting pipeline in continuous mode...")
-    
-    if not await data_pipeline.initialize():
-        logger.error("Failed to initialize pipeline")
-        return False
-    
-    try:
-        await data_pipeline.run_continuous_pipeline()
-    finally:
-        await data_pipeline.cleanup()
-    
-    return True
+    data_pipeline.is_running = False
 
 
 async def run_single_execution():
@@ -110,30 +94,20 @@ async def run_full_sync():
         await data_pipeline.cleanup()
 
 
-async def run_custom_query(query_dict):
-    """Run pipeline with a custom query."""
-    logger.info(f"Starting custom query execution: {query_dict}")
+async def run_continuous_mode():
+    """Run the pipeline in continuous mode."""
+    logger.info("Starting pipeline in continuous mode...")
     
     if not await data_pipeline.initialize():
         logger.error("Failed to initialize pipeline")
         return False
     
     try:
-        # Process data with custom query
-        processed_count = await data_pipeline.process_custom_query(query_dict)
-        logger.info(f"Custom query execution completed. Processed {processed_count} documents")
-        
-        # Print statistics
-        stats = data_pipeline.get_stats()
-        logger.info(f"Pipeline statistics: {stats}")
-        
-        return True
-        
-    except Exception as e:
-        logger.error(f"Custom query execution failed: {e}")
-        return False
+        await data_pipeline.run_continuous_pipeline()
     finally:
         await data_pipeline.cleanup()
+    
+    return True
 
 
 async def health_check():
@@ -164,17 +138,12 @@ async def health_check():
 
 def main():
     """Main entry point."""
-    parser = argparse.ArgumentParser(description="Elasticsearch to Firebase Data Pipeline")
+    parser = argparse.ArgumentParser(description="Simplified Elasticsearch to Firebase Data Pipeline")
     parser.add_argument(
         "--mode",
-        choices=["continuous", "single", "full-sync", "health-check"],
-        default="continuous",
+        choices=["single", "full-sync", "continuous", "health-check"],
+        default="single",
         help="Pipeline execution mode"
-    )
-    parser.add_argument(
-        "--query",
-        type=str,
-        help="Custom Elasticsearch query as JSON string (for custom query mode)"
     )
     parser.add_argument(
         "--config-check",
@@ -188,7 +157,7 @@ def main():
     setup_logging()
     
     logger.info("=" * 60)
-    logger.info("Elasticsearch to Firebase Data Pipeline")
+    logger.info("Simplified Elasticsearch to Firebase Data Pipeline")
     logger.info(f"Started at: {datetime.now()}")
     logger.info("=" * 60)
     
@@ -199,7 +168,6 @@ def main():
         logger.info(f"Firebase Project: {config.firebase.project_id}")
         logger.info(f"Index: {config.elasticsearch.index}")
         logger.info(f"Collection: {config.firebase.collection}")
-        logger.info(f"Polling Interval: {config.pipeline.polling_interval_seconds}s")
         logger.info(f"Batch Size: {config.pipeline.batch_size}")
         return
     
@@ -209,12 +177,12 @@ def main():
     
     try:
         # Run the appropriate mode
-        if args.mode == "continuous":
-            success = asyncio.run(run_continuous_mode())
-        elif args.mode == "single":
+        if args.mode == "single":
             success = asyncio.run(run_single_execution())
         elif args.mode == "full-sync":
             success = asyncio.run(run_full_sync())
+        elif args.mode == "continuous":
+            success = asyncio.run(run_continuous_mode())
         elif args.mode == "health-check":
             success = asyncio.run(health_check())
         else:

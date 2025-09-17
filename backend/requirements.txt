@@ -1,0 +1,13 @@
+# Core dependencies
+elasticsearch>=8.0.0
+firebase-admin>=6.0.0
+requests>=2.28.0
+pydantic>=1.10.0,<2.0.0
+python-dotenv>=0.19.0
+loguru>=0.6.0
+
+# Image processing
+Pillow>=9.0.0
+
+# Optional: for better performance
+urllib3>=1.26.0

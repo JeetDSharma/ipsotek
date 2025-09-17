@@ -1,9 +1,8 @@
-"""
-Simplified pipeline without Pydantic models - just raw dictionaries.
-"""
 import asyncio
 import time
 from datetime import datetime, timedelta
+import requests
+from urllib.parse import quote
 from typing import List, Dict, Any, Optional
 from loguru import logger
 
@@ -66,7 +65,7 @@ class SimpleDataPipeline:
         except Exception as e:
             logger.error(f"Error during cleanup: {e}")
     
-    async def process_recent_data(self, minutes_back: int = 5) -> int:
+    async def process_recent_data(self, minutes_back: int = 5, limit: Optional[int] = None) -> int:
         """Process data from the last N minutes."""
         try:
             logger.info(f"Processing data from the last {minutes_back} minutes...")
@@ -78,17 +77,21 @@ class SimpleDataPipeline:
                 batch_size=config.pipeline.batch_size
             )
             
+            if limit is not None and limit > 0:
+                documents = documents[:limit]
+
             if not documents:
                 logger.info("No recent documents found")
                 return 0
             
             logger.info(f"Found {len(documents)} recent documents")
-            
-            # Store documents in Firebase
-            stored_count = firebase_client.store_documents_batch(
-                documents=documents,
-                collection_name=config.firebase.collection
-            )
+            # Image Processing and incremental commit (also stores docs)
+            try:
+                token = self._fetch_image_bearer_token()
+                stored_count = self._process_and_attach_images_with_incremental_commit(documents, token)
+            except Exception as img_err:
+                logger.error(f"Image processing failed: {img_err}")
+                stored_count = 0
             
             # Update statistics
             self.stats["total_processed"] += 1
@@ -110,7 +113,7 @@ class SimpleDataPipeline:
             self.stats["last_error"] = str(e)
             return 0
     
-    async def process_all_data(self) -> int:
+    async def process_all_data(self, limit: Optional[int] = None) -> int:
         """Process all data from Elasticsearch."""
         try:
             logger.info("Starting to process all data from Elasticsearch...")
@@ -121,17 +124,21 @@ class SimpleDataPipeline:
                 batch_size=config.pipeline.batch_size
             )
             
+            if limit is not None and limit > 0:
+                documents = documents[:limit]
+
             if not documents:
                 logger.info("No documents found")
                 return 0
             
             logger.info(f"Found {len(documents)} documents")
-            
-            # Store documents in Firebase
-            stored_count = firebase_client.store_documents_batch(
-                documents=documents,
-                collection_name=config.firebase.collection
-            )
+            # Image Processing and incremental commit (also stores docs)
+            try:
+                token = self._fetch_image_bearer_token()
+                stored_count = self._process_and_attach_images_with_incremental_commit(documents, token)
+            except Exception as img_err:
+                logger.error(f"Image processing failed: {img_err}")
+                stored_count = 0
             
             # Update statistics
             self.stats["total_processed"] += 1
@@ -152,6 +159,118 @@ class SimpleDataPipeline:
             self.stats["total_failed"] += 1
             self.stats["last_error"] = str(e)
             return 0
+
+    def _fetch_image_bearer_token(self) -> str:
+        """Authenticate and get bearer token for image API."""
+        url = config.pipeline.image_auth_url
+        payload = {"username": config.pipeline.image_username, "password": config.pipeline.image_password}
+        response = requests.post(url, json=payload, verify=False, timeout=15)
+        response.raise_for_status()
+        token = response.text.strip().strip('"')
+        return token
+
+    def _build_image_url(self, index_name: str, source_id: str) -> str:
+        base_raw = config.pipeline.image_base_url or ""
+        base = base_raw.splitlines()[0].strip().rstrip('/')
+        encoded_index = quote(index_name, safe="")
+        encoded_id = quote(source_id, safe="")
+        return f"{base}/{encoded_index}/{encoded_id}?overlay=false"
+
+    def _build_alt_image_url(self, index_name: str, source_id: str) -> str:
+        """Alternative URL form that prefixes .ds- if needed."""
+        if index_name.startswith('.ds-'):
+            return self._build_image_url(index_name, source_id)
+        return self._build_image_url(f".ds-{index_name}", source_id)
+
+    def _process_and_attach_images(self, documents: List[Dict[str, Any]], token: str) -> None:
+        """For each document, fetch its image and upload to Firebase Storage, then enrich doc."""
+        headers = {"Authorization": f"Bearer {token}"}
+        session = requests.Session()
+        session.verify = False
+        logger.info(f"Starting image processing for {len(documents)} documents")
+        for doc in documents:
+            try:
+                index_name = doc.get("_index", "")
+                source_id = doc.get("_id", "")
+                if not index_name or not source_id:
+                    continue
+                image_url = self._build_image_url(index_name, source_id)
+                resp = session.get(image_url, headers=headers, timeout=20)
+                if resp.status_code == 404:
+                    alt_url = self._build_alt_image_url(index_name, source_id)
+                    logger.warning(f"Primary image URL 404, retrying with alt form: {alt_url}")
+                    resp = session.get(alt_url, headers=headers, timeout=20)
+                if resp.status_code != 200 or not resp.content:
+                    logger.warning(f"No image for {index_name}/{source_id} (status {resp.status_code})")
+                    continue
+                content_type = resp.headers.get("Content-Type", "image/jpeg")
+                ts = datetime.utcnow().strftime("%Y/%m/%d")
+                dest_path = f"{config.pipeline.storage_prefix}/{ts}/{index_name}_{source_id}.jpg"
+                upload_meta = firebase_client.upload_image_bytes(resp.content, dest_path, content_type=content_type)
+                if upload_meta:
+                    src = doc.setdefault("_source", {})
+                    media_url = (
+                        upload_meta.get("media_url_with_token")
+                        or upload_meta.get("media_url")
+                    )
+                    if media_url:
+                        src["image_url"] = media_url
+                        logger.info(f"Attached image URL to document {source_id}")
+            except Exception as e:
+                logger.error(f"Image handling failed for doc {doc.get('_id')}: {e}")
+        logger.info("Image processing step complete")
+
+    def _process_and_attach_images_with_incremental_commit(self, documents: List[Dict[str, Any]], token: str) -> int:
+        batch_size = max(1, config.pipeline.batch_size)
+        headers = {"Authorization": f"Bearer {token}"}
+        session = requests.Session()
+        session.verify = False
+        logger.info(f"Starting image processing with incremental commit, batch size {batch_size}")
+        staged: List[Dict[str, Any]] = []
+        total_committed = 0
+        for doc in documents:
+            try:
+                index_name = doc.get("_index", "")
+                source_id = doc.get("_id", "")
+                if not index_name or not source_id:
+                    continue
+                image_url = self._build_image_url(index_name, source_id)
+                logger.info(f"Fetching image for {index_name}/{source_id}")
+                resp = session.get(image_url, headers=headers, timeout=20)
+                if resp.status_code == 404:
+                    alt_url = self._build_alt_image_url(index_name, source_id)
+                    logger.warning(f"Primary image URL 404, retrying: {alt_url}")
+                    resp = session.get(alt_url, headers=headers, timeout=20)
+                if resp.status_code == 200 and resp.content:
+                    content_type = resp.headers.get("Content-Type", "image/jpeg")
+                    ts = datetime.utcnow().strftime("%Y/%m/%d")
+                    dest_path = f"{config.pipeline.storage_prefix}/{ts}/{index_name}_{source_id}.jpg"
+                    upload_meta = firebase_client.upload_image_bytes(resp.content, dest_path, content_type=content_type)
+                    if upload_meta:
+                        src = doc.setdefault("_source", {})
+                        media_url = (
+                            upload_meta.get("media_url_with_token")
+                            or upload_meta.get("media_url")
+                        )
+                        if media_url:
+                            src["image_url"] = media_url
+                    else:
+                        logger.error(f"Upload failed for {index_name}/{source_id}")
+                else:
+                    logger.warning(f"No image for {index_name}/{source_id} (status {resp.status_code})")
+                staged.append(doc)
+                if len(staged) >= batch_size:
+                    committed = firebase_client.store_documents_batch(staged, config.firebase.collection)
+                    logger.info(f"Committed {len(staged)} documents to Firestore")
+                    total_committed += committed
+                    staged = []
+            except Exception as e:
+                logger.error(f"Image handling failed for doc {doc.get('_id')}: {e}")
+        if staged:
+            committed = firebase_client.store_documents_batch(staged, config.firebase.collection)
+            logger.info(f"Committed remaining {len(staged)} documents to Firestore")
+            total_committed += committed
+        return total_committed
     
     def get_stats(self) -> Dict[str, Any]:
         """Get current pipeline statistics."""
