@@ -12,6 +12,7 @@ from firebase_client import firebase_client
 from notifications import notification_service
 from event_statistics import event_statistics_service
 from sms_service import sms_service
+from whatsapp_service import whatsapp_service
 
 
 class SimpleDataPipeline:
@@ -46,6 +47,10 @@ class SimpleDataPipeline:
             # Initialize SMS service
             if not sms_service.initialize():
                 logger.warning("SMS service initialization failed - SMS alerts will be disabled")
+            
+            # Initialize WhatsApp service
+            if not whatsapp_service.initialize():
+                logger.warning("WhatsApp service initialization failed - WhatsApp alerts will be disabled")
             
             # Test connections
             if not firebase_client.test_connection():
@@ -313,6 +318,7 @@ class SimpleDataPipeline:
                         batch_number += 1
                         self._send_batch_notification(committed, batch_number)
                         self._send_sms_alerts_for_batch(staged, batch_number)
+                        self._send_whatsapp_alerts_for_batch(staged, batch_number)
                         self._update_event_statistics()
                     
                     staged = []
@@ -330,6 +336,7 @@ class SimpleDataPipeline:
                 batch_number += 1
                 self._send_batch_notification(committed, batch_number)
                 self._send_sms_alerts_for_batch(staged, batch_number)
+                self._send_whatsapp_alerts_for_batch(staged, batch_number)
                 self._update_event_statistics()
         
         return total_committed
@@ -390,6 +397,39 @@ class SimpleDataPipeline:
             logger.error(f"Error sending SMS alerts for batch: {e}")
             return False
     
+    def _send_whatsapp_alerts_for_batch(self, documents: List[Dict[str, Any]], batch_number: int = None) -> bool:
+        """Send WhatsApp alerts for each event in the batch."""
+        try:
+            if not config.whatsapp.enabled:
+                logger.debug("WhatsApp alerts disabled, skipping WhatsApp notifications")
+                return True
+            
+            success_count = 0
+            for doc in documents:
+                try:
+                    result = whatsapp_service.send_event_alert(doc)
+                    if result.get("success"):
+                        success_count += 1
+                    else:
+                        error_msg = f"Failed to send WhatsApp for event {doc.get('_id')}: {result.get('error')}"
+                        message_sid = result.get("message_sid")
+                        if message_sid:
+                            error_msg += f" (Message SID: {message_sid})"
+                        logger.warning(error_msg)
+                except Exception as e:
+                    logger.error(f"Error sending WhatsApp for event {doc.get('_id')}: {e}")
+            
+            if success_count > 0:
+                logger.info(f"Sent {success_count} WhatsApp alerts for batch {batch_number or 'unknown'}")
+                return True
+            else:
+                logger.warning(f"No WhatsApp alerts sent for batch {batch_number or 'unknown'}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending WhatsApp alerts for batch: {e}")
+            return False
+    
     def _send_single_event_sms(self, event_data: Dict[str, Any]) -> bool:
         """Send SMS alert for a single event."""
         try:
@@ -410,6 +450,28 @@ class SimpleDataPipeline:
                 
         except Exception as e:
             logger.error(f"Error sending SMS for event {event_data.get('_id')}: {e}")
+            return False
+    
+    def _send_single_event_whatsapp(self, event_data: Dict[str, Any]) -> bool:
+        """Send WhatsApp alert for a single event."""
+        try:
+            if not config.whatsapp.enabled:
+                return True
+            
+            result = whatsapp_service.send_event_alert(event_data)
+            if result.get("success"):
+                logger.info(f"WhatsApp alert sent for event {event_data.get('_id')}")
+                return True
+            else:
+                error_msg = f"Failed to send WhatsApp for event {event_data.get('_id')}: {result.get('error')}"
+                message_sid = result.get("message_sid")
+                if message_sid:
+                    error_msg += f" (Message SID: {message_sid})"
+                logger.error(error_msg)
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending WhatsApp for event {event_data.get('_id')}: {e}")
             return False
     
     def _update_event_statistics(self) -> bool:
@@ -494,6 +556,7 @@ class SimpleDataPipeline:
                 "elasticsearch": elasticsearch_client.health_check(),
                 "firebase": firebase_client.test_connection(),
                 "sms": sms_service.test_connection() if config.twilio.enabled else True,
+                "whatsapp": whatsapp_service.test_connection() if config.whatsapp.enabled else True,
                 "pipeline": self.is_running,
                 "timestamp": datetime.utcnow()
             }
@@ -501,11 +564,13 @@ class SimpleDataPipeline:
             overall_health = all([
                 health_status["elasticsearch"],
                 health_status["firebase"],
-                health_status["sms"] if config.twilio.enabled else True
+                health_status["sms"] if config.twilio.enabled else True,
+                health_status["whatsapp"] if config.whatsapp.enabled else True
             ])
             
             health_status["overall"] = overall_health
             health_status["sms_status"] = sms_service.get_status()
+            health_status["whatsapp_status"] = whatsapp_service.get_status()
             
             return health_status
             
@@ -515,6 +580,7 @@ class SimpleDataPipeline:
                 "elasticsearch": False,
                 "firebase": False,
                 "sms": False,
+                "whatsapp": False,
                 "pipeline": False,
                 "overall": False,
                 "error": str(e),

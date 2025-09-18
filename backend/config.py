@@ -64,6 +64,19 @@ class TwilioConfig(BaseSettings):
         env_file = ".env"
 
 
+class WhatsAppConfig(BaseSettings):
+    """Twilio WhatsApp configuration."""
+    account_sid: str = Field(env="TWILIO_ACCOUNT_SID")  # Same as SMS
+    auth_token: str = Field(env="TWILIO_AUTH_TOKEN")    # Same as SMS
+    from_number: str = Field(env="WHATSAPP_FROM_NUMBER")  # e.g., whatsapp:+14155238886
+    to_number: str = Field(env="WHATSAPP_TO_NUMBER")      # e.g., whatsapp:+14134665844
+    content_sid: str = Field(env="WHATSAPP_CONTENT_SID")  # Template SID
+    enabled: bool = Field(default=True, env="WHATSAPP_ENABLED")
+    
+    class Config:
+        env_file = ".env"
+
+
 class LoggingConfig(BaseSettings):
     """Logging configuration."""
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
@@ -81,6 +94,7 @@ class Config:
         self.firebase = FirebaseConfig()
         self.pipeline = PipelineConfig()
         self.twilio = TwilioConfig()
+        self.whatsapp = WhatsAppConfig()
         self.logging = LoggingConfig()
     
     def get_elasticsearch_url(self) -> str:
